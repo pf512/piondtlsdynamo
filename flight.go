@@ -22,15 +22,21 @@ package dtls
                                      CertificateRequest*     /
                           <--------      ServerHelloDone    /
 
+                                             ServerHello    \
+                                      [ChangeCipherSpec]      Flight 4b
+                          <--------             Finished    /
+
   Certificate*                                              \
   ClientKeyExchange                                          \
   CertificateVerify*                                          Flight 5
   [ChangeCipherSpec]                                         /
   Finished                -------->                         /
 
+  [ChangeCipherSpec]                                        \ Flight 5b
+  Finished                -------->                         /
+
                                       [ChangeCipherSpec]    \ Flight 6
                           <--------             Finished    /
-
 */
 
 type flightVal uint8
@@ -41,7 +47,9 @@ const (
 	flight2
 	flight3
 	flight4
+	flight4b
 	flight5
+	flight5b
 	flight6
 )
 
@@ -57,8 +65,12 @@ func (f flightVal) String() string {
 		return "Flight 3"
 	case flight4:
 		return "Flight 4"
+	case flight4b:
+		return "Flight 4b"
 	case flight5:
 		return "Flight 5"
+	case flight5b:
+		return "Flight 5b"
 	case flight6:
 		return "Flight 6"
 	default:
@@ -67,9 +79,9 @@ func (f flightVal) String() string {
 }
 
 func (f flightVal) isLastSendFlight() bool {
-	return f == flight6
+	return f == flight6 || f == flight5b
 }
 
 func (f flightVal) isLastRecvFlight() bool {
-	return f == flight5
+	return f == flight5 || f == flight4b
 }

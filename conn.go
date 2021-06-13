@@ -26,6 +26,7 @@ import (
 const (
 	initialTickerInterval = time.Second
 	cookieLength          = 20
+	sessionLength         = 32
 	defaultNamedCurve     = elliptic.X25519
 	inboundBufferSize     = 8192
 	// Default replay protection window is specified by RFC 6347 Section 4.1.2.6
@@ -178,6 +179,7 @@ func createConn(ctx context.Context, nextConn net.Conn, config *Config, isClient
 		log:                         logger,
 		initialEpoch:                0,
 		keyLogWriter:                config.KeyLogWriter,
+		sessionStore:                config.SessionStore,
 	}
 
 	var initialFlight flightVal
