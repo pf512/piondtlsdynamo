@@ -6,6 +6,9 @@ package dtls
   of a number of messages, they should be viewed as monolithic for the
   purpose of timeout and retransmission.
   https://tools.ietf.org/html/rfc4347#section-4.2.4
+
+  Note: The flight4b and flight5b will be only used in session resumption.
+
   Client                                          Server
   ------                                          ------
                                       Waiting                 Flight 0
@@ -37,6 +40,7 @@ package dtls
 
                                       [ChangeCipherSpec]    \ Flight 6
                           <--------             Finished    /
+
 */
 
 type flightVal uint8
