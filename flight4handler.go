@@ -135,11 +135,9 @@ func flight4Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 			Secret: state.masterSecret,
 			Addr:   c.RemoteAddr().String(),
 		}
-		if err := cfg.sessionStore.Set(&s); err != nil {
-			return 0, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
-		}
+		cfg.sessionStore.Set(&s, false)
 
-		cfg.log.Tracef("[handshake] save session for: %s", s.String())
+		cfg.log.Tracef("[handshake] save session: %+v", s)
 	}
 
 	// Now, encrypted packets can be handled

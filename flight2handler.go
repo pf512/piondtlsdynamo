@@ -3,7 +3,6 @@ package dtls
 import (
 	"bytes"
 	"context"
-	"encoding/hex"
 
 	"github.com/pion/dtls/v2/pkg/protocol"
 	"github.com/pion/dtls/v2/pkg/protocol/alert"
@@ -41,9 +40,8 @@ func flight2Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 	}
 
 	if len(clientHello.SessionID) > 0 && cfg.sessionStore != nil {
-		id := hex.EncodeToString(clientHello.SessionID)
-		if s := cfg.sessionStore.Get(id); s != nil {
-			cfg.log.Tracef("[handshake] resume session for: %s", id)
+		if s := cfg.sessionStore.Get(clientHello.SessionID); s != nil {
+			cfg.log.Tracef("[handshake] resume session for: %x", clientHello.SessionID)
 
 			state.masterSecret = s.Secret
 			state.SessionID = clientHello.SessionID

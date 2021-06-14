@@ -16,16 +16,13 @@ import (
 
 func flight5Parse(ctx context.Context, c flightConn, state *State, cache *handshakeCache, cfg *handshakeConfig) (flightVal, *alert.Alert, error) {
 	if len(state.SessionID) > 0 && cfg.sessionStore != nil {
-		s := &Session{
+		s := Session{
 			ID:     state.SessionID,
 			Secret: state.masterSecret,
 			Addr:   c.RemoteAddr().String(),
 		}
-		err := cfg.sessionStore.Set(s)
-		if err != nil {
-			return 0, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
-		}
-		cfg.log.Tracef("[handshake] save session: %s, err: %v", s.String(), err)
+		cfg.sessionStore.Set(&s, true)
+		cfg.log.Tracef("[handshake] save session: %+v", s)
 	}
 
 	_, msgs, ok := cache.fullPullMap(state.handshakeRecvSequence,

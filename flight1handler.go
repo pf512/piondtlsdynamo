@@ -92,8 +92,8 @@ func flight1Generate(c flightConn, state *State, cache *handshakeCache, cfg *han
 
 	if cfg.sessionStore != nil {
 		addr := c.RemoteAddr().String()
-		if s := cfg.sessionStore.Get(addr); s != nil {
-			cfg.log.Tracef("[handshake] get saved session: %s", s.String())
+		if s := cfg.sessionStore.GetByAddr(addr); s != nil {
+			cfg.log.Tracef("[handshake] get saved session: %x", s.ID)
 
 			state.SessionID = s.ID
 			state.masterSecret = s.Secret

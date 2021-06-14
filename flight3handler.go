@@ -122,17 +122,12 @@ func flight3Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 				return flight5b, nil, nil
 			}
 
-			state.SessionID = []byte{}
-			state.masterSecret = []byte{}
-
 			if cfg.sessionStore != nil {
-				cfg.log.Tracef("[handshake] clean old session for: %s", c.RemoteAddr().String())
-				err := cfg.sessionStore.Del(c.RemoteAddr().String())
-				if err != nil {
-					return 0, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
-				}
+				cfg.log.Tracef("[handshake] clean old session : %s", state.SessionID)
+				cfg.sessionStore.Del(state.SessionID)
 
 				state.SessionID = h.SessionID
+				state.masterSecret = []byte{}
 			}
 		}
 	}
