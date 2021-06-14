@@ -10,9 +10,17 @@ import (
 	"time"
 )
 
+// FileSessionStore is a simple file based SessionStore.
+// You need set a root path to store the session data.
+// And you can set an optional TTL to avoid long time session.
+//
+// FileSessionStore only clean session while fetching.  If you
+// want clean more aggressively, you could call the Clean() func.
 type FileSessionStore struct {
+	// Root store the session dir root path.
 	Root string
-	TTL  time.Duration
+	// TTL store the session store time duration.
+	TTL time.Duration
 }
 
 type hexSession struct {
@@ -108,4 +116,15 @@ func (fs *FileSessionStore) Del(id []byte) {
 
 	os.Remove(path.Join(fs.Root, sid))
 	os.Remove(path.Join(fs.Root, s.Addr))
+}
+
+func (fs *FileSessionStore) Clean() error {
+	files, err := os.ReadDir(fs.Root)
+	if err != nil {
+		return err
+	}
+
+	for _, f := range files {
+		fs.get(path.Join(fs.Root, f.Name()), true)
+	}
 }
