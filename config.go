@@ -125,7 +125,12 @@ type Config struct {
 	// used for debugging.
 	KeyLogWriter io.Writer
 
+	// SessionStore is the container to store session for resumption.
 	SessionStore SessionStore
+
+	// FastResumption is the flag to allow fast resumption.
+	// In fast resumption, the server will not send HelloVerifyRequest msg.
+	FastResumption bool
 }
 
 func defaultConnectContextMaker() (context.Context, func()) {

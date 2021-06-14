@@ -39,25 +39,7 @@ func flight2Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 		return 0, &alert.Alert{Level: alert.Fatal, Description: alert.AccessDenied}, errCookieMismatch
 	}
 
-	if len(clientHello.SessionID) > 0 && cfg.sessionStore != nil {
-		if s := cfg.sessionStore.Get(clientHello.SessionID); s != nil {
-			cfg.log.Tracef("[handshake] resume session: %x", clientHello.SessionID)
-
-			state.masterSecret = s.Secret
-			state.SessionID = clientHello.SessionID
-
-			if err := state.initCipherSuite(); err != nil {
-				return 0, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
-			}
-
-			clientRandom := state.localRandom.MarshalFixed()
-			cfg.writeKeyLog(keyLogLabelTLS12, clientRandom[:], state.masterSecret)
-
-			return flight4b, nil, nil
-		}
-	}
-
-	return flight4, nil, nil
+	return handleHelloResume(clientHello.SessionID, state, cfg, flight4)
 }
 
 func flight2Generate(c flightConn, state *State, cache *handshakeCache, cfg *handshakeConfig) ([]*packet, *alert.Alert, error) {

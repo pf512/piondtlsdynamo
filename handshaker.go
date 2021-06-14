@@ -102,6 +102,7 @@ type handshakeConfig struct {
 	insecureSkipVerify          bool
 	verifyPeerCertificate       func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error
 	sessionStore                SessionStore
+	fastResumption              bool
 	rootCAs                     *x509.CertPool
 	clientCAs                   *x509.CertPool
 	retransmitInterval          time.Duration

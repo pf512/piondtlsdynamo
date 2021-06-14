@@ -180,6 +180,7 @@ func createConn(ctx context.Context, nextConn net.Conn, config *Config, isClient
 		initialEpoch:                0,
 		keyLogWriter:                config.KeyLogWriter,
 		sessionStore:                config.SessionStore,
+		fastResumption:              config.FastResumption,
 	}
 
 	var initialFlight flightVal
