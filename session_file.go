@@ -23,10 +23,10 @@ type FileSessionStore struct {
 }
 
 type hexSession struct {
-	ID       string `json:"id"`
-	Secret   string `json:"secret"`
-	Addr     string `json:"addr"`
-	ExpireAt time.Time
+	ID       string    `json:"id"`
+	Secret   string    `json:"secret"`
+	Addr     string    `json:"addr"`
+	ExpireAt time.Time `json:"expire_at"`
 }
 
 func (fs *FileSessionStore) Set(s *Session, isClient bool) {
