@@ -682,6 +682,9 @@ func (c *Conn) handleIncomingPacket(buf []byte, enqueue bool) (bool, *alert.Aler
 		var err error
 		buf, err = c.state.cipherSuite.Decrypt(buf)
 		if err != nil {
+			if len(c.state.SessionID) > 0 {
+				return false, &alert.Alert{Level: alert.Fatal, Description: alert.DecryptError}, err
+			}
 			c.log.Debugf("%s: decrypt failed: %s", srvCliStr(c.state.isClient), err)
 			return false, nil, nil
 		}
