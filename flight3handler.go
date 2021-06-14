@@ -122,7 +122,7 @@ func flight3Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 				return flight5b, nil, nil
 			}
 
-			if cfg.sessionStore != nil {
+			if cfg.sessionStore != nil && len(state.SessionID) > 0 {
 				cfg.log.Tracef("[handshake] clean old session : %s", state.SessionID)
 				cfg.sessionStore.Del(state.SessionID)
 

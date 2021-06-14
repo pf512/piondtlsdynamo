@@ -3,7 +3,6 @@ package dtls
 import (
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"path"
@@ -73,7 +72,9 @@ func (fs *FileSessionStore) GetByAddr(addr string) *Session {
 
 func (fs *FileSessionStore) get(path string, checkTTL bool) (s *Session) {
 	f, err := os.Open(path)
-	if err != nil {
+	if os.IsNotExist(err) {
+		return
+	} else if err != nil {
 		log.Println("open file error", err)
 		return
 	}
@@ -81,7 +82,7 @@ func (fs *FileSessionStore) get(path string, checkTTL bool) (s *Session) {
 	d := hexSession{}
 	err = json.NewDecoder(f).Decode(&d)
 	if err != nil {
-		fmt.Println("decode error", err)
+		log.Println("decode error", err)
 		return
 	}
 
@@ -89,7 +90,7 @@ func (fs *FileSessionStore) get(path string, checkTTL bool) (s *Session) {
 
 	s.ID, err = hex.DecodeString(d.ID)
 	if err != nil {
-		fmt.Println("decode id error", err)
+		log.Println("decode id error", err)
 		return
 	}
 
@@ -100,7 +101,7 @@ func (fs *FileSessionStore) get(path string, checkTTL bool) (s *Session) {
 
 	s.Secret, err = hex.DecodeString(d.Secret)
 	if err != nil {
-		fmt.Println("decode secret error", err)
+		log.Println("decode secret error", err)
 		return
 	}
 
@@ -127,4 +128,6 @@ func (fs *FileSessionStore) Clean() error {
 	for _, f := range files {
 		fs.get(path.Join(fs.Root, f.Name()), true)
 	}
+
+	return nil
 }
