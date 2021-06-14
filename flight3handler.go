@@ -81,20 +81,16 @@ func flight3Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 		state.remoteRandom = h.Random
 		cfg.log.Tracef("[handshake] use cipher suite: %s", selectedCipherSuite.String())
 
-		if len(h.SessionID) > 0 {
-			if bytes.Equal(state.SessionID, h.SessionID) {
-				return handleResumption(ctx, c, state, cache, cfg)
-			}
-
-			if len(state.SessionID) > 0 {
-				cfg.log.Tracef("[handshake] clean old session : %s", state.SessionID)
-				cfg.sessionStore.Del(state.SessionID)
-
-				state.SessionID = h.SessionID
-			}
-		} else {
-			state.SessionID = []byte{}
+		if len(h.SessionID) > 0 && bytes.Equal(state.SessionID, h.SessionID) {
+			return handleResumption(ctx, c, state, cache, cfg)
 		}
+
+		if len(state.SessionID) > 0 {
+			cfg.log.Tracef("[handshake] clean old session : %s", state.SessionID)
+			cfg.sessionStore.Del(state.SessionID)
+		}
+
+		state.SessionID = h.SessionID
 		state.masterSecret = []byte{}
 	}
 
