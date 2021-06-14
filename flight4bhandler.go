@@ -47,10 +47,6 @@ func flight4bParse(ctx context.Context, c flightConn, state *State, cache *hands
 func flight4bGenerate(c flightConn, state *State, cache *handshakeCache, cfg *handshakeConfig) ([]*packet, *alert.Alert, error) {
 	var pkts []*packet
 
-	if err := state.initCipherSuite(); err != nil {
-		return nil, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
-	}
-
 	extensions := []extension.Extension{&extension.RenegotiationInfo{
 		RenegotiatedConnection: 0,
 	}}
@@ -65,9 +61,6 @@ func flight4bGenerate(c flightConn, state *State, cache *handshakeCache, cfg *ha
 			ProtectionProfiles: []SRTPProtectionProfile{state.srtpProtectionProfile},
 		})
 	}
-
-	clientRandom := state.localRandom.MarshalFixed()
-	cfg.writeKeyLog(keyLogLabelTLS12, clientRandom[:], state.masterSecret)
 
 	cipherSuiteID := uint16(state.cipherSuite.ID())
 	serverHello := &handshake.Handshake{

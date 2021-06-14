@@ -46,6 +46,13 @@ func flight2Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 			state.masterSecret = s.Secret
 			state.SessionID = clientHello.SessionID
 
+			if err := state.initCipherSuite(); err != nil {
+				return 0, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
+			}
+
+			clientRandom := state.localRandom.MarshalFixed()
+			cfg.writeKeyLog(keyLogLabelTLS12, clientRandom[:], state.masterSecret)
+
 			return flight4b, nil, nil
 		}
 	}

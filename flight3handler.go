@@ -86,7 +86,7 @@ func flight3Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 				return handleResumption(ctx, c, state, cache, cfg)
 			}
 
-			if cfg.sessionStore != nil && len(state.SessionID) > 0 {
+			if len(state.SessionID) > 0 {
 				cfg.log.Tracef("[handshake] clean old session : %s", state.SessionID)
 				cfg.sessionStore.Del(state.SessionID)
 
