@@ -41,7 +41,7 @@ func flight2Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 
 	if len(clientHello.SessionID) > 0 && cfg.sessionStore != nil {
 		if s := cfg.sessionStore.Get(clientHello.SessionID); s != nil {
-			cfg.log.Tracef("[handshake] resume session for: %x", clientHello.SessionID)
+			cfg.log.Tracef("[handshake] resume session: %x", clientHello.SessionID)
 
 			state.masterSecret = s.Secret
 			state.SessionID = clientHello.SessionID

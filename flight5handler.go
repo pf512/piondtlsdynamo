@@ -15,16 +15,6 @@ import (
 )
 
 func flight5Parse(ctx context.Context, c flightConn, state *State, cache *handshakeCache, cfg *handshakeConfig) (flightVal, *alert.Alert, error) {
-	if len(state.SessionID) > 0 && cfg.sessionStore != nil {
-		s := Session{
-			ID:     state.SessionID,
-			Secret: state.masterSecret,
-			Addr:   c.RemoteAddr().String(),
-		}
-		cfg.sessionStore.Set(&s, true)
-		cfg.log.Tracef("[handshake] save session: %+v", s)
-	}
-
 	_, msgs, ok := cache.fullPullMap(state.handshakeRecvSequence,
 		handshakeCachePullRule{handshake.TypeFinished, cfg.initialEpoch + 1, false, false},
 	)
@@ -56,6 +46,16 @@ func flight5Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 	}
 	if !bytes.Equal(expectedVerifyData, finished.VerifyData) {
 		return 0, &alert.Alert{Level: alert.Fatal, Description: alert.HandshakeFailure}, errVerifyDataMismatch
+	}
+
+	if len(state.SessionID) > 0 {
+		s := Session{
+			ID:     state.SessionID,
+			Secret: state.masterSecret,
+			Addr:   c.RemoteAddr().String(),
+		}
+		cfg.log.Tracef("[handshake] save new session: %x", s.ID)
+		cfg.sessionStore.Set(&s, true)
 	}
 
 	return flight5, nil, nil

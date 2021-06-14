@@ -91,9 +91,11 @@ func flight3Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 				cfg.sessionStore.Del(state.SessionID)
 
 				state.SessionID = h.SessionID
-				state.masterSecret = []byte{}
 			}
+		} else {
+			state.SessionID = []byte{}
 		}
+		state.masterSecret = []byte{}
 	}
 
 	if cfg.localPSKCallback != nil {
@@ -167,6 +169,9 @@ func handleResumption(ctx context.Context, c flightConn, state *State, cache *ha
 		return 0, &alert.Alert{Level: alert.Fatal, Description: alert.InternalError}, err
 	}
 	if !bytes.Equal(expectedVerifyData, finished.VerifyData) {
+		cfg.log.Tracef("[handshake] clean invalid session: %s", state.SessionID)
+		cfg.sessionStore.Del(state.SessionID)
+
 		return 0, &alert.Alert{Level: alert.Fatal, Description: alert.HandshakeFailure}, errVerifyDataMismatch
 	}
 

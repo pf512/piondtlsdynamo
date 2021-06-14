@@ -129,7 +129,7 @@ func flight4Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 		cfg.writeKeyLog(keyLogLabelTLS12, clientRandom[:], state.masterSecret)
 	}
 
-	if cfg.sessionStore != nil && len(state.SessionID) > 0 {
+	if len(state.SessionID) > 0 {
 		s := Session{
 			ID:     state.SessionID,
 			Secret: state.masterSecret,
