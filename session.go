@@ -1,6 +1,6 @@
 package dtls
 
-// Session store data needid in resumption
+// Session store data needed in resumption
 type Session struct {
 	// ID store session id
 	ID []byte
