@@ -1,6 +1,7 @@
 package dtls
 
 import (
+	"bytes"
 	"encoding/hex"
 	"net"
 	"os"
@@ -89,6 +90,14 @@ func TestSessionResumption(t *testing.T) {
 		_, err = conn.Write([]byte("dtls"))
 		if err != nil {
 			t.Fatal(err)
+		}
+
+		if !bytes.Equal(secret, conn.state.masterSecret) {
+			t.Fatalf("invalid master sercret: %x", conn.state.masterSecret)
+		}
+
+		if !bytes.Equal(id, conn.state.SessionID) {
+			t.Fatalf("invalid session id: %x", conn.state.SessionID)
 		}
 	}()
 	wg.Wait()
