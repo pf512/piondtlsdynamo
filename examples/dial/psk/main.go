@@ -25,6 +25,8 @@ func main() {
 			return []byte{0xAB, 0xC1, 0x23}, nil
 		},
 		PSKIdentityHint:      []byte("Pion DTLS Server"),
+		SessionStore: &dtls.FileSessionStore{Root: "/Users/pfleming/Documents/All_Repos/dtls 2/examples/dial/psk"},
+		FastResumption: true,
 		CipherSuites:         []dtls.CipherSuiteID{dtls.TLS_PSK_WITH_AES_128_CCM_8},
 		ExtendedMasterSecret: dtls.RequireExtendedMasterSecret,
 	}

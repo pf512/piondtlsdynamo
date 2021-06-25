@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// Prepare the IP to connect to
-	addr := &net.UDPAddr{IP: net.ParseIP("127.0.0.1"), Port: 4444}
+	addr := &net.UDPAddr{IP: net.ParseIP("0.0.0.0"), Port: 4444}
 
 	// Create parent context to cleanup handshaking connections on exit.
 	ctx, cancel := context.WithCancel(context.Background())
@@ -29,6 +29,8 @@ func main() {
 			return []byte{0xAB, 0xC1, 0x23}, nil
 		},
 		PSKIdentityHint:      []byte("Pion DTLS Client"),
+		SessionStore: &dtls.FileSessionStore{Root: "/Users/pfleming/Documents/All_Repos/dtls 2/examples/listen/psk"},
+		FastResumption: true,
 		CipherSuites:         []dtls.CipherSuiteID{dtls.TLS_PSK_WITH_AES_128_CCM_8},
 		ExtendedMasterSecret: dtls.RequireExtendedMasterSecret,
 		// Create timeout context for accepted connection.

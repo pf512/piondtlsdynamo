@@ -1,6 +1,7 @@
 module github.com/pion/dtls/v2
 
 require (
+	github.com/aws/aws-sdk-go v1.38.65
 	github.com/pion/logging v0.2.2
 	github.com/pion/transport v0.12.3
 	github.com/pion/udp v0.1.1
