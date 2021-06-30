@@ -8,8 +8,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/pion/dtls/v2/pkg/protocol"
-	"github.com/pion/dtls/v2/pkg/protocol/alert"
+	"github.com/pf512/piondtlsdynamo/pkg/protocol"
+	"github.com/pf512/piondtlsdynamo/pkg/protocol/alert"
 	"golang.org/x/xerrors"
 )
 

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/pion/dtls/v2/pkg/crypto/elliptic"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/elliptic"
 )
 
 func TestExtensionSupportedPointFormats(t *testing.T) {

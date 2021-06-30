@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/pion/dtls/v2/db"
+	"github.com/pf512/piondtlsdynamo/db"
 )
 func main() {
 

@@ -1,4 +1,4 @@
-module github.com/pion/dtls/v2
+module github.com/pf512/piondtlsdynamo
 
 require (
 	github.com/aws/aws-sdk-go v1.38.65

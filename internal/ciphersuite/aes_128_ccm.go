@@ -6,10 +6,10 @@ import (
 	"hash"
 	"sync/atomic"
 
-	"github.com/pion/dtls/v2/pkg/crypto/ciphersuite"
-	"github.com/pion/dtls/v2/pkg/crypto/clientcertificate"
-	"github.com/pion/dtls/v2/pkg/crypto/prf"
-	"github.com/pion/dtls/v2/pkg/protocol/recordlayer"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/ciphersuite"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/clientcertificate"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/prf"
+	"github.com/pf512/piondtlsdynamo/pkg/protocol/recordlayer"
 )
 
 // Aes128Ccm is a base class used by multiple AES-CCM Ciphers

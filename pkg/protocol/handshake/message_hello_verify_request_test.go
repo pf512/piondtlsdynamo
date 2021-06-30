@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/pion/dtls/v2/pkg/protocol"
+	"github.com/pf512/piondtlsdynamo/pkg/protocol"
 )
 
 func TestHandshakeMessageHelloVerifyRequest(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 	"encoding/binary"
 	"errors"
 
-	"github.com/pion/dtls/v2/pkg/protocol"
-	"github.com/pion/dtls/v2/pkg/protocol/recordlayer"
+	"github.com/pf512/piondtlsdynamo/pkg/protocol"
+	"github.com/pf512/piondtlsdynamo/pkg/protocol/recordlayer"
 )
 
 var (

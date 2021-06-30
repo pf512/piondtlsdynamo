@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/pion/dtls/v2/pkg/crypto/hash"
-	"github.com/pion/dtls/v2/pkg/crypto/signature"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/hash"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/signature"
 )
 
 func TestHandshakeMessageCertificateVerify(t *testing.T) {

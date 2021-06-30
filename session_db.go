@@ -2,7 +2,7 @@ package dtls
 
 import (
 	"encoding/hex"
-	sessiondb "github.com/pion/dtls/v2/db"
+	sessiondb "github.com/pf512/piondtlsdynamo/db"
 	"log"
 	"os"
 	"path"

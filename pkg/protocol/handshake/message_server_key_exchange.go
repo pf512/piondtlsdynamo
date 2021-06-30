@@ -3,9 +3,9 @@ package handshake
 import (
 	"encoding/binary"
 
-	"github.com/pion/dtls/v2/pkg/crypto/elliptic"
-	"github.com/pion/dtls/v2/pkg/crypto/hash"
-	"github.com/pion/dtls/v2/pkg/crypto/signature"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/elliptic"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/hash"
+	"github.com/pf512/piondtlsdynamo/pkg/crypto/signature"
 )
 
 // MessageServerKeyExchange supports ECDH and PSK
