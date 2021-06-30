@@ -90,7 +90,12 @@ func flight3Parse(ctx context.Context, c flightConn, state *State, cache *handsh
 			cfg.sessionStore.Del(state.SessionID)
 		}
 
-		state.SessionID = h.SessionID
+		if cfg.sessionStore == nil {
+			state.SessionID = []byte{}
+		} else {
+			state.SessionID = h.SessionID
+		}
+
 		state.masterSecret = []byte{}
 	}
 
