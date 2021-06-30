@@ -1,4 +1,4 @@
-package dtls
+package piondtlsdynamo
 
 import "github.com/pf512/piondtlsdynamo/pkg/protocol/recordlayer"
 

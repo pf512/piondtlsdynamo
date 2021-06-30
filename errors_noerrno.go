@@ -3,7 +3,7 @@
 // For systems without syscall.Errno.
 // Build targets must be inverse of errors_errno.go
 
-package dtls
+package piondtlsdynamo
 
 import (
 	"os"

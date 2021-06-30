@@ -1,4 +1,4 @@
-package dtls
+package piondtlsdynamo
 
 import (
 	"crypto/tls"

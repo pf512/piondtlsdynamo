@@ -1,6 +1,6 @@
 // +build gofuzz
 
-package dtls
+package piondtlsdynamo
 
 import "fmt"
 

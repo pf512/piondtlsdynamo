@@ -1,4 +1,4 @@
-package dtls
+package piondtlsdynamo
 
 // Session store data needed in resumption
 type Session struct {

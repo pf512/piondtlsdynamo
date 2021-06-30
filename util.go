@@ -1,4 +1,4 @@
-package dtls
+package piondtlsdynamo
 
 func findMatchingSRTPProfile(a, b []SRTPProtectionProfile) (SRTPProtectionProfile, bool) {
 	for _, aProfile := range a {

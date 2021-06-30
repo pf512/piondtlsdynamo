@@ -5,7 +5,7 @@
 // $ grep -R ECONN $(go env GOROOT)/src/syscall/zerrors_*.go \
 //     | tr "." "_" | cut -d"_" -f"2" | sort | uniq
 
-package dtls
+package piondtlsdynamo
 
 import (
 	"os"

@@ -3,7 +3,7 @@
 // For systems having syscall.Errno.
 // The build target must be same as errors_errno.go.
 
-package dtls
+package piondtlsdynamo
 
 import (
 	"net"

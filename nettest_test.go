@@ -1,6 +1,6 @@
 // +build !js
 
-package dtls
+package piondtlsdynamo
 
 import (
 	"net"
